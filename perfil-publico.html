@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Seu perfil no Boralá Tche - Gerencie suas informações e serviços">
+  <title>Meu Perfil | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* =====================================
+       PÁGINA PERFIL PÚBLICO
+    ===================================== */
+    .perfil-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px var(--space-md) 120px;
+    }
+    
+    /* Seção da foto */
+    .foto-section {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .foto-perfil {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--color-primary);
+      padding: 4px;
+      background: white;
+      box-shadow: 0 8px 30px rgba(0, 168, 255, 0.25);
+      transition: var(--transition-normal);
+    }
+    
+    .foto-perfil:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(0, 168, 255, 0.35);
+    }
+    
+    /* Informações principais */
+    .info-principal {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    
+    .info-principal h2 {
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+    
+    .linha-topo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    
+    .badge-tipo {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: white;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-editar {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition-normal);
+    }
+    
+    .btn-editar:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.35);
+    }
+    
+    /* Box de informações */
+    .info-box {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border-light);
+      margin-bottom: var(--space-xl);
+    }
+    
+    .info-item {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .info-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-primary);
+      flex-shrink: 0;
+    }
+    
+    /* Tags de serviços */
+    .tags-servicos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+    
+    .tag {
+      background: rgba(0, 168, 255, 0.1);
+      color: var(--color-primary);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+    }
+    
+    /* Agenda box */
+    .agenda-box {
+      margin-top: var(--space-lg);
+      background: var(--color-border-light);
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+    }
+    
+    .agenda-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .agenda-header h3 {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+    }
+    
+    .ver-mais {
+      font-size: var(--font-size-xs);
+      color: var(--color-primary);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    
+    .hoje-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .horario {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--color-success);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+    }
+    
+    .fechado {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--color-error);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+    }
+    
+    .intervalo {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-xs);
+    }
+    
+    .lista-completa {
+      margin-top: var(--space-md);
+      display: none;
+    }
+    
+    .linha-dia {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-sm) 0;
+      border-top: 1px solid var(--color-border);
+      font-size: var(--font-size-xs);
+    }
+    
+    /* Área do prestador */
+    #areaPrestador {
+      margin-top: var(--space-xl);
+    }
+    
+    /* Filtros */
+    .filtros {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+    }
+    
+    .filtros select {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      border: 2px solid var(--color-border);
+      font-size: var(--font-size-sm);
+      background: var(--color-surface);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      min-width: 180px;
+    }
+    
+    .filtros select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    
+    /* Grid de produtos */
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-lg);
+    }
+    
+    .produto-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border-light);
+      transition: var(--transition-normal);
+    }
+    
+    .produto-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .produto-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .produto-info {
+      padding: var(--space-md);
+    }
+    
+    .produto-info h4 {
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .produto-info p {
+      font-size: var(--font-size-sm);
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+    
+    /* Slider de imagens */
+    .slider {
+      position: relative;
+      overflow: hidden;
+      height: 180px;
+    }
+    
+    .slides {
+      display: flex;
+      transition: transform 0.4s ease;
+      height: 100%;
+    }
+    
+    .slide-img {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    
+    .indicadores {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .dot.ativo {
+      background: var(--color-primary);
+      transform: scale(1.2);
+    }
+    
+    @media (max-width: 600px) {
+      .foto-perfil {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .info-principal h2 {
+        font-size: var(--font-size-xl);
+      }
+      
+      .info-box {
+        padding: var(--space-lg);
+      }
+      
+      .grid-produtos {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorações de fundo -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="marca">
+        <img src="img/logo.png" class="logo" alt="Logo">
+        <span>Boralá Tche</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="perfil-wrapper">
+    <!-- Foto do perfil -->
+    <div class="foto-section">
+      <img id="fotoPerfil" class="foto-perfil" alt="Foto de perfil">
+    </div>
+
+    <!-- Informações principais -->
+    <div class="info-principal">
+      <h2 id="nomeUsuario"></h2>
+      <div class="linha-topo">
+        <span id="tipoUsuario" class="badge-tipo"></span>
+        <a id="btnEditarPerfil" class="btn-editar" href="perfil_cadastro.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          Editar Perfil
+        </a>
+      </div>
+    </div>
+
+    <!-- Box de informações -->
+    <div class="info-box">
+      <p id="enderecoUsuario" class="info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <span></span>
+      </p>
+      
+      <div id="agendaResumo" class="agenda-box"></div>
+      
+      <div id="servicosLinha" class="tags-servicos"></div>
+    </div>
+
+    <!-- Área do prestador -->
+    <div id="areaPrestador" style="display:none;">
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Meus Serviços</h3>
+      
+      <!-- Filtros -->
+      <div class="filtros">
+        <select id="filtroCategoria">
+          <option value="">Todas Categorias</option>
+        </select>
+        <select id="filtroTipo">
+          <option value="">Todos Tipos</option>
+        </select>
+      </div>
+
+      <!-- Produtos -->
+      <div id="gridProdutos" class="grid-produtos"></div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="inicio.html" class="nav-item" data-key="home">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M3 10.5L12 3l9 7.5V21H3z"/>
+      </svg>
+      Início
+    </a>
+
+    <a href="descobrir.html" class="nav-item" data-key="discover">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 2L13.5 9L22 12L13.5 15L12 22L10.5 15L2 12L10.5 9Z"/>
+      </svg>
+      Descobrir
+    </a>
+
+    <a href="match.html" class="nav-item" data-key="matches">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 21s-7-4.35-9.5-8.28C.5 9.28 2.42 6 6 6c2 0 3.5 1.5 6 4 2.5-2.5 4-4 6-4 3.58 0 5.5 3.28 3.5 6.72C19 16.65 12 21 12 21z"/>
+      </svg>
+      Matches
+    </a>
+
+    <a href="agenda.html" class="nav-item" data-key="agenda">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M7 2v3M17 2v3M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+      </svg>
+      Agenda
+    </a>
+
+    <a href="perfil-publico.html" class="nav-item active" data-key="profile">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 12a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+      </svg>
+      Perfil
+    </a>
+
+    <a href="index.html" id="btnLogout" class="nav-item" data-key="logout">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+      </svg>
+      Sair
+    </a>
+  </nav>
+
+  <script type="module" src="js/perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Encontre o serviço de estética ideal para você no Boralá Tche">
+  <title>Nova Busca | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* =====================================
+       PÁGINA MATCH - BUSCA DE SERVIÇOS
+    ===================================== */
+    .match-wrapper {
+      min-height: calc(100vh - 72px);
+      padding-top: 80px;
+      padding-bottom: 120px;
+    }
+    
+    .match-card-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .match-card {
+  display: flex;
+  flex-direction: column; /* força coluna */
+}
+    .match-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border-light);
+      animation: slideUp 0.4s ease forwards;
+    }
+    
+    .match-card h2 {
+      text-align: center;
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-xl);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .match-card h3 {
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      color: var(--color-text);
+      margin: var(--space-xl) 0 var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .match-card h3::before {
+      content: '';
+      width: 4px;
+      height: 18px;
+      background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+      border-radius: 2px;
+    }
+    
+    /* Campo de formulário */
+    .campo {
+      margin-bottom: var(--space-lg);
+    }
+    
+    .campo label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+    }
+    
+    .campo select {
+      width: 100%;
+      padding: var(--space-md);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-size: var(--font-size-base);
+      background: var(--color-surface);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+      padding-right: 48px;
+    }
+    
+    .campo select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(0, 168, 255, 0.12);
+    }
+    
+    /* Grid de Produtos */
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+    
+    .produto-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--color-border);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      background: var(--color-surface);
+    }
+    
+    .produto-card:hover {
+      border-color: var(--color-primary);
+      background: rgba(0, 168, 255, 0.04);
+      transform: translateY(-2px);
+    }
+    
+    .produto-card.selected {
+      border-color: var(--color-primary);
+      background: rgba(0, 168, 255, 0.08);
+    }
+    
+    .produto-card input[type="checkbox"] {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--color-border);
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      transition: var(--transition-fast);
+    }
+    
+    .produto-card input[type="checkbox"]:checked {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    
+    .produto-card input[type="checkbox"]:checked::after {
+      content: "✓";
+      color: white;
+      position: absolute;
+      font-size: 14px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .produto-card span {
+      font-weight: 500;
+      font-size: var(--font-size-sm);
+    }
+    
+    /* Chips de seleção */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-md);
+      background: var(--color-border-light);
+      border-radius: var(--radius-lg);
+    }
+    
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      animation: scaleIn 0.2s ease;
+    }
+    
+    .chip .close {
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    
+    .chip .close:hover {
+      opacity: 1;
+    }
+    
+    /* Botões de ação */
+    .btn-primary {
+      width: 100%;
+      padding: var(--space-lg);
+      border: none;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: white;
+      font-weight: 600;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.35);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 168, 255, 0.45);
+    }
+    
+    .btn-primary.big {
+      font-size: var(--font-size-lg);
+      padding: var(--space-lg) var(--space-xl);
+    }
+    
+    .btn-danger {
+      width: 100%;
+      padding: var(--space-lg);
+      border: none;
+      border-radius: var(--radius-lg);
+      background: var(--color-error);
+      color: white;
+      font-weight: 600;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+    
+    .btn-danger:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+    
+    /* Seção de ações do match */
+    .match-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    
+    .match-actions h2 {
+      text-align: center;
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+    
+    @media (max-width: 600px) {
+      .grid-produtos {
+        grid-template-columns: 1fr;
+      }
+      
+      .match-card {
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+      }
+      
+      .match-card h2 {
+        font-size: var(--font-size-xl);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorações de fundo -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="marca">
+        <img src="img/logo.png" class="logo" alt="Logo">
+        <span>Boralá Tche</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="match-wrapper container">
+    <div class="match-card-container">
+      
+      <!-- Painel de Busca -->
+      <section id="painelBusca" class="match-card">
+        <h2>Nova Procura</h2>
+
+        <div class="campo">
+          <label for="clienteCategoria">Categoria</label>
+          <select id="clienteCategoria">
+            <option value="">Selecione uma categoria</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="clienteTipo">Tipo de Serviço</label>
+          <select id="clienteTipo">
+            <option value="">Selecione um tipo</option>
+          </select>
+        </div>
+
+        <h3>Serviços disponíveis</h3>
+        <div id="clienteProdutos" class="grid-produtos"></div>
+
+        <h3>Você selecionou</h3>
+        <div id="clienteSelecionados" class="chips"></div>
+
+        <button id="salvarBuscaCliente" class="btn-primary">
+          Salvar busca
+        </button>
+      </section>
+
+      <!-- Painel de Ações / Interesses -->
+      <section id="matchAcoes" class="match-actions" style="display:none">
+        <h2>Meus Interesses</h2>
+        <div id="listaInteresses" class="chips"></div>
+
+        <button id="irMatch" class="btn-primary big">
+          🔥 Ver Matches
+        </button>
+
+        <button id="deletarBusca" class="btn-danger big">
+          🗑️ Deletar minha procura
+        </button>
+      </section>
+      
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="inicio.html" class="nav-item" data-key="home">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M3 10.5L12 3l9 7.5V21H3z"/>
+      </svg>
+      Início
+    </a>
+
+    <a href="descobrir.html" class="nav-item" data-key="discover">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 2L13.5 9L22 12L13.5 15L12 22L10.5 15L2 12L10.5 9Z"/>
+      </svg>
+      Descobrir
+    </a>
+
+    <a href="match.html" class="nav-item active" data-key="matches">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 21s-7-4.35-9.5-8.28C.5 9.28 2.42 6 6 6c2 0 3.5 1.5 6 4 2.5-2.5 4-4 6-4 3.58 0 5.5 3.28 3.5 6.72C19 16.65 12 21 12 21z"/>
+      </svg>
+      Matches
+    </a>
+
+    <a href="agenda.html" class="nav-item" data-key="agenda">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M7 2v3M17 2v3M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+      </svg>
+      Agenda
+    </a>
+
+    <a href="perfil-publico.html" class="nav-item" data-key="profile">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 12a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+      </svg>
+      Perfil
+    </a>
+
+    <a href="index.html" id="btnLogout" class="nav-item" data-key="logout">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+      </svg>
+      Sair
+    </a>
+  </nav>
+
+  <script type="module" src="js/match.js"></script>
+</body>
+</html>

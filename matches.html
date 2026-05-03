@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Descubra profissionais de estética compatíveis com você no Boralá Tche">
+  <title>Descobrir | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* =====================================
+       PÁGINA MATCHES - ESTILO TINDER
+    ===================================== */
+    body {
+      background: linear-gradient(180deg, #f8fafc 0%, #f0f4f8 100%);
+    }
+    
+    /* Área principal do swipe */
+    .match-area {
+      height: calc(100vh - 140px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+    
+    /* Pilha de cards */
+    .card-stack {
+      position: relative;
+      width: 360px;
+      max-width: 92vw;
+      height: 520px;
+      
+    }
+    
+    /* Card de match */
+.match-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+
+  transition: var(--transition-normal);
+  cursor: grab;
+
+  /* ESSENCIAL */
+  display: flex;
+  flex-direction: column;
+}
+    
+    .match-card:active {
+      cursor: grabbing;
+    }
+    
+    .match-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Container de imagens */
+.match-images {
+  position: relative;
+  width: 100%;
+
+  /* altura perfeita */
+  flex: 0 0 50%;
+
+  overflow: hidden;
+}
+
+.match-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+    
+    /* Indicadores de imagem (dots) */
+    .img-dots {
+      position: absolute;
+      top: var(--space-md);
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 10;
+    }
+    
+    .img-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(231, 89, 177, 0.5);
+      transition: var(--transition-fast);
+      cursor: pointer;
+    }
+    
+    .img-dot.active {
+      background: var(--color-primary);
+      transform: scale(1.2);
+      box-shadow: 0 2px 8px rgba(0, 168, 255, 0.4);
+    }
+    
+    /* Barras de progresso de imagem */
+    .img-bars {
+      position: absolute;
+      top: var(--space-sm);
+      left: var(--space-sm);
+      right: var(--space-sm);
+      display: flex;
+      gap: 4px;
+      z-index: 10;
+    }
+    
+    .img-bar {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .img-bar.active {
+      background: white;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Informações do card */
+.match-info {
+
+  /* ESSENCIAL */
+  flex: 1;
+
+  padding: var(--space-lg);
+
+  /* scroll interno */
+  overflow-y: auto;
+
+  background: white;
+}
+
+
+/* SCROLL BONITO */
+.match-info::-webkit-scrollbar {
+  width: 6px;
+}
+
+.match-info::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+}
+
+    /* Prestador */
+    .prestador {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    
+    .prestador img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--color-primary);
+    }
+    
+    .prestador-info {
+      flex: 1;
+    }
+    
+    .prestador-info .nome {
+      font-weight: 600;
+      font-size: var(--font-size-base);
+      color: var(--color-text);
+    }
+    
+    .prestador-info .rating {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+    
+    /* Título do serviço */
+    .match-titulo {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+    
+    /* Descrição */
+    .match-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin-bottom: var(--space-md);
+    }
+    
+    /* Meta dados */
+    .match-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+      font-size: var(--font-size-sm);
+    }
+    
+    .match-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--color-text-muted);
+    }
+    
+    .match-meta .price {
+      font-weight: 700;
+      color: var(--color-primary);
+      font-size: var(--font-size-base);
+    }
+    
+    /* Botões de ação */
+    .match-actions {
+      margin-top: var(--space-xl);
+      display: flex;
+      gap: var(--space-xl);
+      justify-content: center;
+    }
+    
+    .action {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-normal);
+    }
+    
+    /* Botão Skip */
+    .action.skip {
+      background: var(--color-surface);
+      color: var(--color-error);
+      border: 2px solid var(--color-error);
+    }
+    
+    .action.skip:hover {
+      background: var(--color-error);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.35);
+    }
+    
+    /* Botão Like */
+    .action.like {
+      background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+      color: white;
+    }
+    
+    .action.like:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(255, 77, 141, 0.45);
+    }
+    
+    .action:active {
+      transform: scale(0.95);
+    }
+    
+    /* Animação de click */
+    .action.clicked {
+      animation: pulse 0.3s ease;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    
+    /* Swipe animations */
+    .match-card.swipe-left {
+      animation: swipeLeft 0.4s ease forwards;
+    }
+    
+    .match-card.swipe-right {
+      animation: swipeRight 0.4s ease forwards;
+    }
+    
+    @keyframes swipeLeft {
+      to {
+        transform: translateX(-150%) rotate(-20deg);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes swipeRight {
+      to {
+        transform: translateX(150%) rotate(20deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Empty state */
+    .empty-matches {
+      text-align: center;
+      padding: var(--space-2xl);
+    }
+    
+    .empty-matches-icon {
+      font-size: 80px;
+      margin-bottom: var(--space-lg);
+      opacity: 0.6;
+    }
+    
+    .empty-matches h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+    }
+    
+    .empty-matches p {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-lg);
+    }
+    
+    /* Responsividade */
+    @media (max-width: 400px) {
+      .card-stack {
+        height: 480px;
+      }
+      
+      .match-images {
+        height: 55%;
+      }
+      
+      .match-info {
+        padding: var(--space-md);
+        
+      }
+      
+      .action {
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .card-stack {
+        width: 400px;
+        height: 560px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorações de fundo -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="marca">
+        <img src="img/logo.png" class="logo" alt="Logo">
+        <span>Boralá Tche</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Área de Match -->
+  <main class="match-area">
+    <div class="card-stack" id="cardStack">
+      <!-- Cards serão inseridos aqui via JS -->
+    </div>
+
+    <div class="match-actions">
+      <button id="btnSkip" class="action skip" aria-label="Pular">✖</button>
+      <button id="btnLike" class="action like" aria-label="Curtir">❤</button>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="inicio.html" class="nav-item" data-key="home">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M3 10.5L12 3l9 7.5V21H3z"/>
+      </svg>
+      Início
+    </a>
+
+    <a href="descobrir.html" class="nav-item" data-key="discover">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 2L13.5 9L22 12L13.5 15L12 22L10.5 15L2 12L10.5 9Z"/>
+      </svg>
+      Descobrir
+    </a>
+
+    <a href="match.html" class="nav-item active" data-key="matches">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 21s-7-4.35-9.5-8.28C.5 9.28 2.42 6 6 6c2 0 3.5 1.5 6 4 2.5-2.5 4-4 6-4 3.58 0 5.5 3.28 3.5 6.72C19 16.65 12 21 12 21z"/>
+      </svg>
+      Matches
+    </a>
+
+    <a href="agenda.html" class="nav-item" data-key="agenda">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M7 2v3M17 2v3M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+      </svg>
+      Agenda
+    </a>
+
+    <a href="perfil-publico.html" class="nav-item" data-key="profile">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 12a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+      </svg>
+      Perfil
+    </a>
+
+    <a href="index.html" id="btnLogout" class="nav-item" data-key="logout">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+      </svg>
+      Sair
+    </a>
+  </nav>
+
+  <script type="module" src="js/matches.js"></script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Gerencie sua agenda de serviços de estética no Boralá Tche">
+  <title>Agenda | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* =====================================
+       PÁGINA AGENDA
+    ===================================== */
+    .agenda-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px var(--space-md) 120px;
+    }
+    
+    /* Header da página */
+    .agenda-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    
+    .agenda-header h1 {
+      font-size: var(--font-size-3xl);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--color-text) 0%, var(--color-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .agenda-header p {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-base);
+    }
+    
+    /* Container da agenda */
+    .agenda-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    
+    @media (min-width: 768px) {
+      .agenda-container {
+        grid-template-columns: 380px 1fr;
+      }
+    }
+    
+    /* Cards de calendário e horários */
+    .calendario,
+    .horarios {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border-light);
+    }
+    
+    /* Header do calendário */
+    .calendario-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .calendario-header h3 {
+      font-weight: 700;
+      text-transform: capitalize;
+      font-size: var(--font-size-lg);
+    }
+    
+    .calendario-nav {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--color-border-light);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .calendario-nav:hover {
+      background: var(--color-primary);
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    /* Dias da semana */
+    .dias-semana {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+    
+    .dias-semana span {
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      padding: var(--space-sm);
+    }
+    
+    /* Grid dos dias */
+    .grid-dias {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    
+    .grid-dias div {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: var(--font-size-sm);
+      background: var(--color-surface);
+      transition: var(--transition-normal);
+      position: relative;
+    }
+    
+    .grid-dias div:hover {
+      background: rgba(0, 168, 255, 0.1);
+      transform: scale(1.05);
+    }
+    
+    .dia-ativo {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)) !important;
+      color: white !important;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4);
+      transform: scale(1.05);
+    }
+    
+    .dia-disponivel {
+      color: var(--color-primary);
+      border: 1px solid rgba(0, 168, 255, 0.3);
+    }
+    
+    .dia-disponivel::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-primary);
+    }
+    
+    .dia-ocupado {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--color-error);
+    }
+    
+    /* Seção de horários */
+    .horarios h3 {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+      color: var(--color-text);
+    }
+    
+    .lista-horarios {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    
+    .horario-item {
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-lg);
+      background: var(--color-border-light);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      font-weight: 500;
+      font-size: var(--font-size-sm);
+    }
+    
+    .horario-item:hover {
+      transform: scale(1.05);
+      background: rgba(0, 168, 255, 0.1);
+      border-color: var(--color-primary);
+    }
+    
+    .horario-item.selected {
+      background: var(--color-primary);
+      color: white;
+    }
+    
+    .horario-item.indisponivel {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--color-error);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    
+    /* Painel de informações */
+    .painel-info {
+      background: linear-gradient(135deg, var(--color-text) 0%, #374151 100%);
+      color: white;
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-md);
+      animation: slideUp 0.3s ease;
+    }
+    
+    .painel-info h4 {
+      font-size: var(--font-size-base);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .painel-info p {
+      font-size: var(--font-size-sm);
+      opacity: 0.9;
+    }
+    
+    /* Modal de agendamento */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: var(--space-md);
+      animation: fadeIn 0.2s ease;
+    }
+    
+    .modal.hidden {
+      display: none;
+    }
+    
+    .modal-content {
+      width: 100%;
+      max-width: 450px;
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-lg);
+      position: relative;
+      animation: scaleIn 0.25s ease;
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .modal-content h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-md);
+    }
+    
+    .modal-content p {
+      margin: var(--space-sm) 0;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+    
+    #fecharModal {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: var(--color-border-light);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-lg);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #fecharModal:hover {
+      background: var(--color-error);
+      color: white;
+    }
+    
+    /* Link WhatsApp */
+    .modal-content a {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      background: #25D366;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition-normal);
+    }
+    
+    .modal-content a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+    
+    @media (max-width: 600px) {
+      .agenda-header h1 {
+        font-size: var(--font-size-2xl);
+      }
+      
+      .calendario,
+      .horarios {
+        padding: var(--space-md);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorações de fundo -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="marca">
+        <img src="img/logo.png" class="logo" alt="Logo">
+        <span>Boralá Tche</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="agenda-wrapper">
+    <div class="agenda-header">
+      <h1>Minha Agenda</h1>
+      <p>Gerencie seus compromissos</p>
+    </div>
+
+    <div class="agenda-container">
+      <!-- Calendário -->
+      <div class="calendario">
+        <div class="calendario-header">
+          <button id="prevMes" class="calendario-nav" aria-label="Mês anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <h3 id="mesAno"></h3>
+          <button id="nextMes" class="calendario-nav" aria-label="Próximo mês">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="dias-semana">
+          <span>Seg</span>
+          <span>Ter</span>
+          <span>Qua</span>
+          <span>Qui</span>
+          <span>Sex</span>
+          <span>Sáb</span>
+          <span>Dom</span>
+        </div>
+
+        <div id="gridDias" class="grid-dias"></div>
+      </div>
+      
+      <!-- Horários -->
+      <div class="horarios">
+        <h3 id="dataSelecionada">Selecione um dia</h3>
+        <div id="listaHorarios" class="lista-horarios"></div>
+      </div>
+    </div>
+
+    <!-- Modal de Agendamento -->
+    <div id="modalAgendamento" class="modal hidden">
+      <div class="modal-content">
+        <button id="fecharModal" aria-label="Fechar">✕</button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="inicio.html" class="nav-item" data-key="home">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M3 10.5L12 3l9 7.5V21H3z"/>
+      </svg>
+      Início
+    </a>
+
+    <a href="descobrir.html" class="nav-item" data-key="discover">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 2L13.5 9L22 12L13.5 15L12 22L10.5 15L2 12L10.5 9Z"/>
+      </svg>
+      Descobrir
+    </a>
+
+    <a href="match.html" class="nav-item" data-key="matches">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 21s-7-4.35-9.5-8.28C.5 9.28 2.42 6 6 6c2 0 3.5 1.5 6 4 2.5-2.5 4-4 6-4 3.58 0 5.5 3.28 3.5 6.72C19 16.65 12 21 12 21z"/>
+      </svg>
+      Matches
+    </a>
+
+    <a href="agenda.html" class="nav-item active" data-key="agenda">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M7 2v3M17 2v3M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+      </svg>
+      Agenda
+    </a>
+
+    <a href="perfil-publico.html" class="nav-item" data-key="profile">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 12a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+      </svg>
+      Perfil
+    </a>
+
+    <a href="index.html" id="btnLogout" class="nav-item" data-key="logout">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+      </svg>
+      Sair
+    </a>
+  </nav>
+
+  <script type="module" src="js/agenda.js"></script>
+</body>
+</html>

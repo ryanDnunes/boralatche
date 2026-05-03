@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Boralá Tche - Seus matches e conexões com profissionais de estética">
+  <title>Início | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* =====================================
+       PÁGINA INÍCIO - MATCHES
+    ===================================== */
+    .page-header {
+      padding: var(--space-xl) 0 var(--space-lg);
+    }
+
+  .btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+ background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+}
+
+.btn-whatsapp svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.btn-whatsapp:hover {
+  background-color: #20b858;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 211, 102, 0.5);
+}
+
+.btn-whatsapp:active {
+  transform: scale(0.96);
+}
+
+    
+    .page-header h1 {
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .page-header .subtitle {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+    
+    /* Grid de Matches */
+    .matches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    
+    /* Card de Match */
+    .match-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border-light);
+      transition: var(--transition-normal);
+      animation: fadeIn 0.4s ease forwards;
+    }
+    
+    .match-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .match-card-image {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+    }
+    
+    .match-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-normal);
+    }
+    
+    .match-card:hover .match-card-image img {
+      transform: scale(1.05);
+    }
+    
+    .match-card-badge {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    
+    .match-card-content {
+      padding: var(--space-lg);
+    }
+    
+    .match-card-content h3 {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+      color: var(--color-text);
+    }
+    
+    .match-card-content p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .match-card-price {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    
+    .match-card-actions {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-border-light);
+    }
+    
+    .match-card-actions button {
+      flex: 1;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      transition: var(--transition-fast);
+    }
+    
+   .btn-agendar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  padding: 12px 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  box-shadow: 0 6px 14px rgba(99, 102, 241, 0.4);
+}
+
+/* Hover */
+.btn-agendar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Click */
+.btn-agendar:active {
+  transform: scale(0.96);
+}
+
+/* Estado "Iniciar" */
+.btn-iniciar {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 6px 14px rgba(34, 197, 94, 0.4);
+}
+
+/* Estado "Finalizar" */
+.btn-finalizar {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  box-shadow: 0 6px 14px rgba(245, 158, 11, 0.4);
+}
+
+/* Efeito pulsando (chama atenção) */
+.btn-destaque {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+    
+    .btn-deslike {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-error);
+    }
+    
+    .btn-deslike:hover {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: var(--color-error);
+    }
+    
+    /* Modal de Agendamento */
+    .modal-agendamento {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: var(--space-md);
+      animation: fadeIn 0.2s ease;
+    }
+    
+    .modal-box {
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-xl);
+      animation: scaleIn 0.25s ease;
+    }
+    
+    .modal-box h3 {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+    
+    #lista-datas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    
+    #lista-datas button {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      border: 2px solid var(--color-border);
+      background: var(--color-surface);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      transition: var(--transition-fast);
+    }
+    
+    #lista-datas button:hover,
+    #lista-datas button.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+    
+    #lista-horas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    
+    #lista-horas button {
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      border: 2px solid var(--color-border);
+      background: var(--color-surface);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      transition: var(--transition-fast);
+    }
+    
+    #lista-horas button:hover {
+      background: var(--color-success);
+      color: white;
+      border-color: var(--color-success);
+    }
+    
+    #fechar-modal {
+      width: 100%;
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      background: var(--color-error);
+      color: white;
+      font-weight: 600;
+    }
+    
+    #fechar-modal:hover {
+      background: #dc2626;
+    }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-2xl);
+      color: var(--color-text-muted);
+    }
+    
+    .empty-state-icon {
+      font-size: 64px;
+      margin-bottom: var(--space-lg);
+      opacity: 0.5;
+    }
+    
+    .empty-state h3 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+    }
+    
+    /* Section titles */
+    .section-title {
+      grid-column: 1 / -1;
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      margin-top: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--color-border-light);
+    }
+    
+    @media (max-width: 480px) {
+      .matches-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      #lista-horas {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorações de fundo -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="marca">
+        <img src="img/logo.png" class="logo" alt="Logo">
+        <span>Boralá Tche</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container">
+    <section class="page-header">
+      <h1 id="dados">Seus Matches</h1>
+      <p class="subtitle">Aqui estão seus matches recentes</p>
+    </section>
+
+    <section id="meus_matches_like" class="matches-grid">
+      <!-- Cards de matches serão inseridos aqui via JS -->
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="inicio.html" class="nav-item active" data-key="home">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M3 10.5L12 3l9 7.5V21H3z"/>
+      </svg>
+      Início
+    </a>
+
+    <a href="descobrir.html" class="nav-item" data-key="discover">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 2L13.5 9L22 12L13.5 15L12 22L10.5 15L2 12L10.5 9Z"/>
+      </svg>
+      Descobrir
+    </a>
+
+    <a href="match.html" class="nav-item" data-key="matches">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 21s-7-4.35-9.5-8.28C.5 9.28 2.42 6 6 6c2 0 3.5 1.5 6 4 2.5-2.5 4-4 6-4 3.58 0 5.5 3.28 3.5 6.72C19 16.65 12 21 12 21z"/>
+      </svg>
+      Matches
+    </a>
+
+    <a href="agenda.html" class="nav-item" data-key="agenda">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M7 2v3M17 2v3M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+      </svg>
+      Agenda
+    </a>
+
+    <a href="perfil-publico.html" class="nav-item" data-key="profile">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 12a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+      </svg>
+      Perfil
+    </a>
+
+    <a href="index.html" id="btnLogout" class="nav-item" data-key="logout">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+      </svg>
+      Sair
+    </a>
+  </nav>
+
+  <script type="module" src="js/inicio.js"></script>
+</body>
+</html>

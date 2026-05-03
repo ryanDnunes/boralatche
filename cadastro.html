@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Crie sua conta no Boralá Tche - Conecte-se com profissionais de estética">
+  <title>Criar Conta | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/login_cadastro.css">
+</head>
+<body>
+  <!-- Decorações de fundo -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  
+  <!-- Container do formulário -->
+  <div class="auth-container">
+    <img src="img/logo.png" class="logo" alt="Logo Boralá Tche">
+    
+    <h2>Crie sua conta</h2>
+    <p class="subtitle">Junte-se à comunidade Boralá Tche</p>
+    
+    <input id="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required>
+    <input id="senha" type="password" placeholder="Crie uma senha segura" autocomplete="new-password" required>
+    
+    <button onclick="cadastrar()">Criar minha conta</button>
+    
+    <p>Já tem uma conta? <a href="index.html">Entrar</a></p>
+    
+    <!-- Contêiner para mensagens de erro -->
+    <div id="mensagem-erro"></div>
+  </div>
+
+  <script type="module" src="js/cadastro.js"></script>
+</body>
+</html>

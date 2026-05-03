@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00A8FF">
+  <meta name="description" content="Complete seu perfil no Boralá Tche">
+  <title>Editar Perfil | Boralá Tche</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* =====================================
+       PÁGINA PERFIL CADASTRO / EDIÇÃO
+    ===================================== */
+    body {
+      background: linear-gradient(180deg, #f8fafc 0%, #f0f4f8 100%);
+      padding-bottom: 120px;
+    }
+    
+    .perfil-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px var(--space-md) 120px;
+    }
+    
+    /* Título da página */
+    .perfil-container > h2 {
+      text-align: center;
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-xl);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Cards */
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border-light);
+      animation: fadeIn 0.4s ease forwards;
+    }
+    
+    .card h3 {
+      font-size: var(--font-size-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .card h3::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+      border-radius: 2px;
+    }
+    
+    /* Avatar */
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto var(--space-lg);
+      border: 4px solid var(--color-primary);
+      padding: 4px;
+      background: white;
+      box-shadow: 0 8px 30px rgba(0, 168, 255, 0.25);
+    }
+    
+    /* Inputs e labels */
+    label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+    }
+    
+    input,
+    select {
+      width: 100%;
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--color-border);
+      font-size: var(--font-size-base);
+      background: var(--color-surface);
+      transition: var(--transition-normal);
+      margin-bottom: var(--space-md);
+    }
+    
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(0, 168, 255, 0.12);
+    }
+    
+    input::placeholder {
+      color: var(--color-text-muted);
+    }
+    
+    /* Botões */
+    button {
+      width: 100%;
+      padding: var(--space-md);
+      border: none;
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      font-size: var(--font-size-base);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      margin-top: var(--space-sm);
+    }
+    
+    button[type="submit"],
+    #uploadBtn,
+    #salvarHorarios,
+    #confirmarServicos {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 168, 255, 0.35);
+    }
+    
+    button[type="submit"]:hover,
+    #uploadBtn:hover,
+    #salvarHorarios:hover,
+    #confirmarServicos:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 168, 255, 0.45);
+    }
+    
+    .logout {
+      background: var(--color-text-muted);
+      color: white;
+    }
+    
+    /* Seção de agenda/disponibilidade */
+    #agendaSemana {
+      margin-top: var(--space-xl);
+    }
+    
+    .legenda {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-size-xs);
+      margin-bottom: var(--space-md);
+      color: var(--color-text-muted);
+    }
+    
+    .dia-card {
+      background: var(--color-border-light);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      transition: var(--transition-normal);
+    }
+    
+    .dia-card.ativo {
+      border-color: var(--color-primary);
+      background: rgba(0, 168, 255, 0.05);
+    }
+    
+    .dia-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .dia-header h4 {
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+    }
+    
+    .toggle-dia {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: var(--color-primary);
+    }
+    
+    .inputs-horario {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+    
+    .inputs-horario input {
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      font-size: var(--font-size-sm);
+      margin-bottom: 0;
+    }
+    
+    .inputs-horario input:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    
+    .grupo {
+      display: flex;
+      flex-direction: column;
+      font-size: var(--font-size-xs);
+    }
+    
+    .grupo label {
+      margin-bottom: var(--space-xs);
+      font-weight: 500;
+    }
+    
+    .info-cliente {
+      grid-column: span 2;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      background: var(--color-border-light);
+      padding: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+    
+    /* Catálogo de serviços */
+    #catalogoServicos {
+      margin-top: var(--space-xl);
+    }
+    
+    #catalogoServicos h2 {
+      text-align: center;
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    #catalogoServicos h3 {
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      margin: var(--space-lg) 0 var(--space-md);
+    }
+    
+    /* Produto checkbox card */
+    .produto-card {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--color-border);
+      background: var(--color-surface);
+      cursor: pointer;
+      transition: var(--transition-normal);
+      margin-bottom: var(--space-md);
+    }
+    
+    .produto-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+    
+    .produto-card span {
+      font-weight: 500;
+    }
+    
+    .produto-card input[type="checkbox"] {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--color-primary);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+    
+    .produto-card input[type="checkbox"]:checked {
+      background: var(--color-primary);
+    }
+    
+    .produto-card input[type="checkbox"]:checked::after {
+      content: "✓";
+      color: white;
+      position: absolute;
+      font-size: 14px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    /* Chips de seleção */
+    #selecionados {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-md);
+      background: var(--color-border-light);
+      border-radius: var(--radius-lg);
+      font-family: inherit;
+      white-space: normal;
+    }
+    
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+    }
+    
+    .chip .close {
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    /* Serviço card marketplace */
+    .servico-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border-light);
+      transition: var(--transition-normal);
+    }
+    
+    .servico-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .servico-card h4 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-lg);
+      color: var(--color-primary);
+    }
+    
+    /* Preview gallery */
+    .preview-container {
+      display: flex;
+      gap: var(--space-md);
+      overflow-x: auto;
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .preview-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .preview-container::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: 20px;
+    }
+    
+    .preview-item {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      border: 2px solid var(--color-primary);
+      background: var(--color-border-light);
+    }
+    
+    .servico-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .preview-remove {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+    }
+    
+    /* Upload container */
+    .upload-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .upload-container input {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+    }
+    
+    /* Campo */
+    .campo {
+      margin-bottom: var(--space-md);
+    }
+    
+    /* Toggles */
+    .toggles {
+      display: flex;
+      gap: var(--space-xl);
+      margin: var(--space-lg) 0;
+      font-size: var(--font-size-sm);
+    }
+    
+.acoes {
+  display: flex;
+  gap: 12px;
+}
+
+.acoes button {
+  flex: 1;
+  border-radius: 14px;
+  padding: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+  color: white;
+}
+
+/* ================= SALVAR (AZUL → ROXO) ================= */
+.salvar-btn {
+  background: linear-gradient(135deg, #00A8FF, #7C3AED);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.25);
+}
+
+.salvar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 168, 255, 0.25);
+}
+
+/* ================= EXCLUIR (ROSA → VERMELHO ROXO) ================= */
+.danger {
+  background: linear-gradient(135deg, #FF4D8D, #7C3AED);
+  box-shadow: 0 6px 18px rgba(255, 77, 141, 0.25);
+}
+
+.danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 77, 141, 0.3);
+}
+.upload-img-btn{
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: linear-gradient(135deg, #00A8FF, #7C3AED, #FF4D8D);
+  background-size: 200% 200%;
+
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+  transition: all 0.25s ease;
+}
+
+/* hover animado estilo app moderno */
+.upload-img-btn:hover{
+  transform: translateY(-2px);
+  background-position: right center;
+  box-shadow: 0 12px 30px rgba(255, 77, 141, 0.25);
+}
+
+/* clique */
+.upload-img-btn:active{
+  transform: scale(0.97);
+}
+
+/* ícone simples */
+.upload-img-btn .icon{
+  font-size: 16px;
+  font-weight: 700;
+}
+/* efeito de clique */
+.acoes button:active {
+  transform: scale(0.96);
+}
+    /* Áreas de usuário */
+    #areaCliente,
+    #areaLocador {
+      margin-top: var(--space-xl);
+      padding: var(--space-xl);
+      background: var(--color-border-light);
+      border-radius: var(--radius-xl);
+      text-align: center;
+    }
+    
+    #areaCliente h2,
+    #areaLocador h2 {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-md);
+    }
+    
+    
+    @media (max-width: 600px) {
+      .perfil-container {
+        padding: var(--space-lg) var(--space-md) 120px;
+      }
+      
+      .card {
+        padding: var(--space-lg);
+      }
+      
+      .avatar {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="perfil-container">
+    <h2>Meu Perfil</h2>
+
+    <div class="card">
+      <img id="avatar" class="avatar" alt="Foto de perfil">
+      <input type="file" id="fileInput" accept="image/*">
+      <button type="button" id="uploadBtn">Salvar Foto</button>
+    </div>
+
+    <form id="usuarioForm" class="card">
+      <h3>Dados Pessoais</h3>
+      
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" placeholder="Seu nome completo" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="seu@email.com" required>
+
+      <label for="telefone">Telefone</label>
+      <input type="text" id="telefone" placeholder="(00) 00000-0000">
+
+      <label for="data_nascimento">Data de Nascimento</label>
+      <input type="date" id="data_nascimento">
+
+      <label for="tipo_usuario">Tipo de Usuário</label>
+      <select id="tipo_usuario" required>
+        <option value="">Selecione</option>
+        <option value="prestador">Prestador</option>
+        <option value="locador">Locador</option>
+        <option value="cliente">Cliente</option>
+      </select>
+
+      <h3>Endereço</h3>
+
+      <label for="rua">Rua</label>
+      <input type="text" id="rua" placeholder="Nome da rua">
+
+      <label for="numero">Número</label>
+      <input type="text" id="numero" placeholder="123">
+
+      <label for="complemento">Complemento</label>
+      <input type="text" id="complemento" placeholder="Apto, sala, etc.">
+
+      <label for="bairro">Bairro</label>
+      <input type="text" id="bairro" placeholder="Nome do bairro">
+
+      <label for="cidade">Cidade</label>
+      <input type="text" id="cidade" placeholder="Sua cidade">
+
+      <label for="estado">Estado</label>
+      <input type="text" id="estado" placeholder="RS">
+
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" placeholder="00000-000">
+
+     <button type="submit">Salvar Dados</button>
+    </form>
+
+    <div id="agendaSemana" class="card">
+      <h3>Minha Disponibilidade</h3>
+
+      <div class="legenda">
+        <span>Ativar dia</span>
+        <span>Horários</span>
+      </div>
+
+      <div id="diasContainer"></div>
+
+     <button type="button" id="salvarHorarios">Salvar Horários</button>
+    </div>
+
+    <!-- Catálogo de Serviços (visível apenas para prestador) -->
+    <div id="catalogoServicos" class="card" style="display:none;">
+      <h2>Catálogo de Serviços</h2>
+
+      <label for="categoria">Categoria:</label>
+      <select id="categoria">
+        <option value="">Selecione</option>
+      </select>
+
+      <label for="tipo">Tipo de Serviço:</label>
+      <select id="tipo">
+        <option value="">Selecione</option>
+      </select>
+
+      <h3>Produtos disponíveis:</h3>
+      <div id="produtos"></div>
+
+      <h3>Selecionados:</h3>
+      <pre id="selecionados"></pre>
+
+      <button type="button" id="confirmarServicos">Inserir produtos</button>
+
+      <h3>Meus Serviços</h3>
+      <div id="listaPrestador"></div>
+    </div>
+
+    <!-- Área reservada para cliente -->
+    <div id="areaCliente" style="display:none;">
+      <h2>Área do Cliente</h2>
+      <p>Em breve novas funcionalidades!</p>
+    </div>
+
+    <!-- Área reservada para locador -->
+    <div id="areaLocador" style="display:none;">
+      <h2>Área do Locador</h2>
+      <p>Em breve novas funcionalidades!</p>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="inicio.html" class="nav-item" data-key="home">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M3 10.5L12 3l9 7.5V21H3z"/>
+      </svg>
+      Início
+    </a>
+
+    <a href="descobrir.html" class="nav-item" data-key="discover">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 2L13.5 9L22 12L13.5 15L12 22L10.5 15L2 12L10.5 9Z"/>
+      </svg>
+      Descobrir
+    </a>
+
+    <a href="match.html" class="nav-item" data-key="matches">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 21s-7-4.35-9.5-8.28C.5 9.28 2.42 6 6 6c2 0 3.5 1.5 6 4 2.5-2.5 4-4 6-4 3.58 0 5.5 3.28 3.5 6.72C19 16.65 12 21 12 21z"/>
+      </svg>
+      Matches
+    </a>
+
+    <a href="agenda.html" class="nav-item" data-key="agenda">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M7 2v3M17 2v3M3 8h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+      </svg>
+      Agenda
+    </a>
+
+    <a href="perfil-publico.html" class="nav-item active" data-key="profile">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M12 12a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+      </svg>
+      Perfil
+    </a>
+
+    <a href="index.html" id="btnLogout" class="nav-item" data-key="logout">
+      <svg viewBox="0 0 24 24" class="icon">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+      </svg>
+      Sair
+    </a>
+  </nav>
+
+  <script type="module" src="js/cadastro_continua.js"></script>
+</body>
+</html>
